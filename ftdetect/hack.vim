@@ -14,6 +14,6 @@
 au BufRead,BufNewFile *.hhi setl filetype=php
 
 au BufRead,BufNewFile *.hh
-  \ if getline(1) =~ '^<?hh'
-  \   setl filetype=php
+  \ if getline(1) =~ '^<?hh' |
+  \   setl filetype=php |
   \ endif
