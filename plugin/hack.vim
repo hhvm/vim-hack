@@ -50,7 +50,11 @@ let s:hack_errorformat =
 
 " Call wrapper for hh_client.
 function! <SID>HackClientCall(suffix)
-  let hh_result = system('hh_client --from-vim '.a:suffix)[:-2]
+  " Invoke typechecker.  We strip the trailing newline to avoid an empty
+  " error.  We also concatenate with the empty string because otherwise
+  " cgetexpr complains about not having a String argument, even though
+  " type(hh_result) == 1.
+  let hh_result = system('hh_client --from-vim '.a:suffix)[:-2].''
 
   let old_fmt = &errorformat
   let &errorformat = s:hack_errorformat
