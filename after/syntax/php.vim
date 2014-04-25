@@ -31,8 +31,15 @@ endfor
 
 " Add PHP and Hack primitive types.
 syn keyword phpType bool[ean] int[eger] real double float string object null contained
-syn keyword phpType void mixed tuple num stringish contained
+syn keyword phpType void mixed tuple num stringish this contained
 syn match phpType +^array$+ contained
+
+" Hack type declarations.
+syn keyword hackTypeDecl type newtype shape contained
+
+syn cluster phpClConst add=hackTypeDecl
+
+hi def link hackTypeDecl Structure
 
 " Hack generic types.
 syn region hackGenericType matchgroup=hackGenericType contained
