@@ -14,10 +14,14 @@
 
 " We clear templatizable PHP keywords because keyword always takes precedence
 " over match and region.
-syn clear phpType
-syn clear phpFunctions
-syn clear phpClasses
-syn clear phpInterfaces
+syn keyword phpType NotAKeyword
+syn clear   phpType
+syn keyword phpFunctions NotAKeyword
+syn clear   phpFunctions
+syn keyword phpClasses NotAKeyword
+syn clear   phpClasses
+syn keyword phpInterfaces NotAKeyword
+syn clear   phpInterfaces
 
 " Add them back, using syn-match for generics.
 let s:builtins = expand("<sfile>:h") . "/php-builtins/*.vim"
