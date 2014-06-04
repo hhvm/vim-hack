@@ -111,6 +111,7 @@ command! -nargs=1 HackFindRefs call hack#find_refs(<q-args>)
 
 au BufWritePost *.php if g:hack#enable | call hack#typecheck() | endif
 au BufWritePost *.hhi if g:hack#enable | call hack#typecheck() | endif
+au BufWritePost *.hh if g:hack#enable | call hack#typecheck() | endif
 
 
 " Keep quickfix window at an adjusted height.
