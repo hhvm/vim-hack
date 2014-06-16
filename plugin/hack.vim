@@ -70,6 +70,8 @@ function! <SID>HackClientCall(suffix)
   else
     botright copen
   endif
+  redraw!
+
   let &errorformat = old_fmt
 endfunction
 
