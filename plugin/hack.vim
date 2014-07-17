@@ -27,6 +27,7 @@ endif
 " - enable:     Typechecking is done on :w.
 " - autoclose:  Quickfix window closes automatically.
 " - errjmp:     Jump to errors after typechecking; default off.
+" - errnocfg:   Show an error when we can't find .hhconfig.
 " - qfsize:     Let the plugin control the quickfix window size.
 if !exists("g:hack#enable")
   let g:hack#enable = 1
@@ -37,10 +38,12 @@ endif
 if !exists("g:hack#errjmp")
   let g:hack#errjmp = 0
 endif
+if !exists("g:hack#errnocfg")
+  let g:hack#errnocfg = 1
+endif
 if !exists("g:hack#qfsize")
   let g:hack#qfsize = 1
 endif
-
 
 " hh_client error format.
 let s:hack_errorformat =
@@ -78,7 +81,12 @@ endfunction
 
 " Main interface functions.
 function! hack#typecheck()
-  call <SID>HackClientCall('| sed "s/No errors!//"')
+  let exclude = ''
+  if !g:hack#errnocfg
+    let exclude .= '2>&1 | sed "s/not a www tree.*//"'
+  endif
+  let exclude .= '| sed "s/No errors!//"'
+  call <SID>HackClientCall(exclude)
 endfunction
 
 function! hack#find_refs(fn)
