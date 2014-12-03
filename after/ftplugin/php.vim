@@ -16,8 +16,12 @@ if exists("b:did_ftplugin_hack")
 endif
 let b:did_ftplugin_hack = 1
 
+if !exists('g:hack#hh_client')
+  let g:hack#hh_client = 'hh_client'
+endif
+
 " Require the hh_client executable.
-if !executable('hh_client')
+if !executable(g:hack#hh_client)
   finish
 endif
 
