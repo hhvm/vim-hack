@@ -57,7 +57,7 @@ function! <SID>HackClientCall(suffix)
   " error.  We also concatenate with the empty string because otherwise
   " cgetexpr complains about not having a String argument, even though
   " type(hh_result) == 1.
-  let hh_result = system(g:hack#hh_client.' --from-vim '.a:suffix)[:-2].''
+  let hh_result = system(g:hack#hh_client.' --from vim --retries 1 --retry-if-init false '.a:suffix)[:-2].''
 
   let old_fmt = &errorformat
   let &errorformat = s:hack_errorformat
