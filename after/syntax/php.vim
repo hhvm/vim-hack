@@ -31,7 +31,7 @@ endfor
 
 " Add PHP and Hack primitive types.
 syn keyword phpType bool[ean] int[eger] real double float string object null contained
-syn keyword phpType void mixed tuple num stringish this contained
+syn keyword phpType void mixed tuple num stringish this resource contained
 syn match phpType +^array$+ contained
 
 " Hack type declarations.
@@ -53,7 +53,8 @@ hi def link hackGenericType Type
 
 " HHVM language features.
 syn keyword phpStatement yield await contained
-syn keyword phpSCKeyword async contained
+syn keyword phpException finally contained
+syn keyword phpStorageClass async contained
 
 " <?hh opener.
 syn region phpRegion matchgroup=Delimiter keepend
