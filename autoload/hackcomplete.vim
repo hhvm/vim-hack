@@ -15,6 +15,10 @@
 " Magical hh_client autocomplete token.
 let s:autotok = 'AUTO332'
 
+if !exists('g:hack#hh_client')
+  let g:hack#hh_client = 'hh_client'
+endif
+
 " Omni findstart phase.
 function! s:FindStart()
   let line = getline('.')
@@ -41,7 +45,7 @@ function! hackcomplete#Complete(findstart, base)
 
   " Pass the buffer to hh_client.
   let buffer = join(lines, "\n")
-  let result = system('hh_client --auto-complete', buffer)
+  let result = system(g:hack#hh_client.' --auto-complete', buffer)
 
   let matches = []
 

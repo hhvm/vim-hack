@@ -17,11 +17,14 @@ if exists("g:loaded_hack")
 endif
 let g:loaded_hack = 1
 
-" Require the hh_client executable.
-if !executable('hh_client')
-  finish
+if !exists('g:hack#hh_client')
+  let g:hack#hh_client = 'hh_client'
 endif
 
+" Require the hh_client executable.
+if !executable(g:hack#hh_client)
+  finish
+endif
 
 " Configuration switches:
 " - enable:     Typechecking is done on :w.
@@ -54,7 +57,7 @@ function! <SID>HackClientCall(suffix)
   " error.  We also concatenate with the empty string because otherwise
   " cgetexpr complains about not having a String argument, even though
   " type(hh_result) == 1.
-  let hh_result = system('hh_client --from-vim '.a:suffix)[:-2].''
+  let hh_result = system(g:hack#hh_client.' --from-vim '.a:suffix)[:-2].''
 
   let old_fmt = &errorformat
   let &errorformat = s:hack_errorformat
@@ -88,7 +91,7 @@ endfunction
 " Get the Hack type at the current cursor position.
 function! hack#get_type()
   let pos = fnameescape(expand('%')).':'.line('.').':'.col('.')
-  let cmd = 'hh_client --type-at-pos '.pos
+  let cmd = g:hack#hh_client.' --type-at-pos '.pos
 
   let output = 'HackType: '.system(cmd)
   let output = substitute(output, '\n$', '', '')
