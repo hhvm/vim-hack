@@ -88,15 +88,37 @@ function! hack#find_refs(fn)
   call <SID>HackClientCall('--find-refs '.a:fn.'| sed "s/[0-9]* total results//"')
 endfunction
 
-" Get the Hack type at the current cursor position.
-function! hack#get_type()
-  let pos = fnameescape(expand('%')).':'.line('.').':'.col('.')
-  let cmd = g:hack#hh_client.' --type-at-pos '.pos
+python << EOF
+import json, subprocess, vim
 
-  let output = 'HackType: '.system(cmd)
-  let output = substitute(output, '\n$', '', '')
-  echo output
-endfunction
+def hh(*args):
+  proc = subprocess.Popen([
+    vim.vars['hack#hh_client'],
+    '--from-vim',
+    '--json',
+    ] + list(args),
+    stdout=subprocess.PIPE)
+  stdout, _ = proc.communicate()
+  return json.loads(stdout)
+
+def vim_get_pos():
+  return vim.eval("fnameescape(expand('%')).':'.line('.').':'.col('.')")
+
+def hack_get_type():
+  """ Get the Hack type at the current cursor position. """
+  pos = vim_get_pos()
+  output = hh('--type-at-pos', pos)
+  print output['type']
+  return 0
+
+def hack_goto_def():
+  """ Jump to the definition of the expression under the cursor. """
+  pos = vim_get_pos()
+  output = hh('--type-at-pos', pos)
+  def_pos = output['pos']
+  vim.command('edit +%d %s' % (def_pos['line'], def_pos['filename']))
+  return 0
+EOF
 
 " Toggle auto-typecheck.
 function! hack#toggle()
@@ -111,7 +133,8 @@ endfunction
 " Commands and auto-typecheck.
 command! HackToggle call hack#toggle()
 command! HackMake   call hack#typecheck()
-command! HackType   call hack#get_type()
+command! HackType   call pyeval('hack_get_type()')
+command! HackGoto   call pyeval('hack_goto_def()')
 command! -nargs=1 HackFindRefs call hack#find_refs(<q-args>)
 
 au BufWritePost *.php if g:hack#enable | call hack#typecheck() | endif
