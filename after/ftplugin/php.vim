@@ -25,7 +25,7 @@ if !exists('g:hack#hh_format') && executable('hh_format')
 endif
 
 if !exists('g:hack#root')
-  let g:hack#root = '~/www'
+  let g:hack#root = '.'
 endif
 
 " Require the hh_client executable.

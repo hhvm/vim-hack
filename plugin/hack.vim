@@ -116,8 +116,8 @@ function! hack#format(from, to)
     echo 'Error[hack]: buffer has unsaved changes'
     return
   endif
-  let frombyte = line2byte(a:from)
 
+  let frombyte = line2byte(a:from)
   let tobyte = line2byte(a:to) + strlen(getline(a:to))
 
   execute a:from.','.a:to.' ! '.g:hack#hh_format.
