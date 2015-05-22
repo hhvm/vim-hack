@@ -107,11 +107,34 @@ function! hack#toggle()
   endif
 endfunction
 
+function! hack#format(from, to)
+  if !executable(g:hack#hh_format)
+    echo 'g:hack#hh_format not executable'
+  endif
+
+  if &modified
+    echo 'Error[hack]: buffer has unsaved changes'
+    return
+  endif
+  let frombyte = line2byte(a:from)
+
+  let tobyte = line2byte(a:to) + strlen(getline(a:to))
+
+  execute a:from.','.a:to.' ! '.g:hack#hh_format.
+    \ ' --from '.frombyte.' --to '.tobyte.
+    \ ' --root '.g:hack#root.' '.expand('%:p')
+  let tmp = g:hack#enable
+  " Disable auto checking
+  let g:hack#enable = 0
+  silent write
+  let g:hack#enable = tmp
+endfunction
 
 " Commands and auto-typecheck.
 command! HackToggle call hack#toggle()
 command! HackMake   call hack#typecheck()
 command! HackType   call hack#get_type()
+command! -range=% HackFormat call hack#format(<line1>, <line2>)
 command! -nargs=1 HackFindRefs call hack#find_refs(<q-args>)
 
 au BufWritePost *.php if g:hack#enable | call hack#typecheck() | endif

@@ -20,6 +20,14 @@ if !exists('g:hack#hh_client')
   let g:hack#hh_client = 'hh_client'
 endif
 
+if !exists('g:hack#hh_format') && executable('hh_format')
+  let g:hack#hh_format = 'hh_format'
+endif
+
+if !exists('g:hack#root')
+  let g:hack#root = '~/www'
+endif
+
 " Require the hh_client executable.
 if !executable(g:hack#hh_client)
   finish
