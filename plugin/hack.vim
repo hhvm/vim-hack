@@ -44,28 +44,57 @@ if !exists("g:hack#qfsize")
   let g:hack#qfsize = 1
 endif
 
+let s:nvim = has('nvim') && exists('*jobwait')
 
 " hh_client error format.
 let s:hack_errorformat =
   \  '%EFile "%f"\, line %l\, characters %c-%.%#,%Z%m,'
   \ .'Error: %m,'
 
+function! s:JobStdoutHandler(job_id, data)
+  let s:stdout = s:stdout + a:data
+endfunction
+
+function! s:JobExitHandler(job_id)
+  let hh_result = join(s:stdout, "\n")
+  call <SID>HackPopulateQuickfix(hh_result)
+endfunction
 
 " Call wrapper for hh_client.
-function! <SID>HackClientCall(suffix)
-  " Invoke typechecker.  We strip the trailing newline to avoid an empty
-  " error.  We also concatenate with the empty string because otherwise
-  " cgetexpr complains about not having a String argument, even though
-  " type(hh_result) == 1.
-  let hh_result = system(g:hack#hh_client.' --from vim --retries 1 --retry-if-init false '.a:suffix)[:-2].''
+function! <SID>HackClientCall(extra_args)
+  " Invoke typechecker. If using neovim, then invoke it asynchronously with
+  " Neovim's job-control functionality.
+  let hh_command = [
+  \ g:hack#hh_client,
+  \ '--from', 'vim',
+  \ '--retries', '1',
+  \ '--retry-if-init', 'false'
+  \ ] + a:extra_args
 
+  if s:nvim
+    let s:stdout = []
+    let callbacks = {
+    \ 'on_stdout': function('s:JobStdoutHandler'),
+    \ 'on_exit': function('s:JobExitHandler')
+    \ }
+    return jobstart(hh_command, callbacks)
+  endif
+
+  " We strip the trailing newline to avoid an empty error. We also concatenate
+  " with the empty string because otherwise cgetexpr complains about not
+  " having a String argument, even though type(hh_result) == 1.
+  let hh_result = system(join(hh_command))[:-2].''
+  call <SID>HackPopulateQuickfix(hh_result)
+endfunction
+
+function! <SID>HackPopulateQuickfix(hh_result)
   let old_fmt = &errorformat
   let &errorformat = s:hack_errorformat
 
   if g:hack#errjmp
-    cexpr hh_result
+    cexpr a:hh_result
   else
-    cgetexpr hh_result
+    cgetexpr a:hh_result
   endif
 
   if g:hack#autoclose
@@ -73,19 +102,17 @@ function! <SID>HackClientCall(suffix)
   else
     botright copen
   endif
-  redraw!
 
   let &errorformat = old_fmt
 endfunction
 
-
 " Main interface functions.
 function! hack#typecheck()
-  call <SID>HackClientCall('| sed "s/No errors!//"')
+  call <SID>HackClientCall([])
 endfunction
 
 function! hack#find_refs(fn)
-  call <SID>HackClientCall('--find-refs '.a:fn.'| sed "s/[0-9]* total results//"')
+  call <SID>HackClientCall(['--find-refs', a:fn])
 endfunction
 
 " Get the Hack type at the current cursor position.
