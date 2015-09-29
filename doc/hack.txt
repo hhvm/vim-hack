@@ -112,6 +112,24 @@ The behavior of this functionality can be controlled by the configuration flags
 described above.
 
 -------------------------------------------------------------------------------
+                                      *HackSearch* *HackSearch!* *hack-search*
+
+Populate the quickfix window with a list of definitions of identifiers that
+matches the input.
+
+:HackSearch
+                        Search using the word under the cursor.
+
+:HackSearch!
+                        Search using the full function name ("Class::func").
+                        |:HackSearch| looks up the name using hh_client. If
+                        the full name could not be found, it falls back to
+                        using the word under the cursor.
+
+:HackSearch {word}
+                        Search using the given word.
+
+-------------------------------------------------------------------------------
                                               *HackFindRefs*  *hack-find-refs*
 
 The Hack server also keeps track of references to each defined function.  To
