@@ -18,3 +18,9 @@ au BufRead,BufNewFile *.hh
   \   setl filetype=hh |
   \   setl syntax=php |
   \ endif
+
+au BufRead,BufNewFile *.php
+  \ if getline(1) =~ '^<?hh' |
+  \   setl filetype=hh |
+  \   setl syntax=php |
+  \ endif
