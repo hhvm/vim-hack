@@ -145,10 +145,11 @@ endfunction
 
 " Get the Hack type at the current cursor position.
 function! hack#get_type()
-  let pos = fnameescape(expand('%')).':'.line('.').':'.col('.')
-  let cmd = g:hack#hh_client.' --type-at-pos '.pos
+  let pos = line('.').':'.col('.')
+  let cmd = join(<SID>HackClientInvocation(['--type-at-pos', pos]))
+  let stdin = join(getline(1,'$'), "\n")
 
-  let output = 'HackType: '.system(cmd)
+  let output = 'HackType: '.system(cmd, stdin)
   let output = substitute(output, '\n$', '', '')
   echo output
 endfunction
