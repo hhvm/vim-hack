@@ -61,6 +61,10 @@ The Hack typechecker plugin exposes the following functions:
                         expression under the cursor.
       +--aliased as :HackType
 
+  hack#goto_def().......Go to the definition of                |hack-goto-def|
+                        expression under the cursor.
+      +--aliased as :HackGotoDef
+
   hack#toggle().........Toggle whether or not the typechecker    |hack-toggle|
                         runs on a buffer when it's written.
       +--aliased as :HackToggle
@@ -159,6 +163,17 @@ will echo the line
 
 This is not restricted to explicitly typed properties, but works also for local
 variables and function returns.
+
+-------------------------------------------------------------------------------
+                                                *HackGotoDef*  *hack-goto-def*
+
+The Hack server can be queried for the definition of any expression in the
+program. To go to the definition of the expression under cursor, simply
+execute
+
+  :HackGotoDef
+
+This command requires Vim 8.0 or Neovim.
 
 -------------------------------------------------------------------------------
                                                    *HackToggle*  *hack-toggle*
