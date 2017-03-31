@@ -154,7 +154,7 @@ function! hack#get_type()
   echo output
 endfunction
 
-" Go to definition
+" Go to the definition of the expression at the current cursor position.
 function! hack#goto_def()
   if !has('nvim') && v:version < 800
     echom 'Vim 8.0 or Neovim is required for this function.'
@@ -162,7 +162,11 @@ function! hack#goto_def()
   endif
 
   let pos = line('.').':'.col('.')
-  let cmd = join(<SID>HackClientInvocation(['--json', '--ide-get-definition', pos]))
+  let cmd = join(<SID>HackClientInvocation([
+  \ '--json',
+  \ '--ide-get-definition',
+  \ pos
+  ]))
   let stdin = join(getline(1,'$'), "\n")
 
   let output = get(json_decode(system(cmd, stdin)), 0, {})

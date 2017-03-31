@@ -168,7 +168,7 @@ variables and function returns.
                                                 *HackGotoDef*  *hack-goto-def*
 
 The Hack server can be queried for the definition of any expression in the
-program. To go to the definition of the expression under cursor, simply
+program.  To go to the definition of the expression under the cursor, simply
 execute
 
   :HackGotoDef
