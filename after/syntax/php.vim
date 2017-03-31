@@ -43,7 +43,7 @@ hi def link hackTypeDecl Structure
 
 " Hack generic types.
 syn region hackGenericType matchgroup=hackGenericType contained
-  \ start=+\w\+<+hs=e
+  \ start=+\w\+\s*<+hs=e
   \ end=+>+
   \ contains=phpType,phpClasses,phpInterfaces,hackGenericType
 
