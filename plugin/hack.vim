@@ -166,7 +166,7 @@ function! hack#goto_def()
   \ '--json',
   \ '--ide-get-definition',
   \ pos
-  ]))
+  \ ]))
   let stdin = join(getline(1,'$'), "\n")
 
   let output = get(json_decode(system(cmd, stdin)), 0, {})
