@@ -115,7 +115,7 @@ endfunction
 function! <SID>HackLookupCurrentIdentifier()
   silent let result = system(
   \ join(<SID>HackClientInvocation(['--identify-function', line('.').':'.col('.')])),
-  \ getline(1, '$'))
+  \ join(getline(1, '$')))
   return substitute(result, '^\s*\(.\{-}\)\s*$', '\1', '') " strip ws
 endfunction
 
