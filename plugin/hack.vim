@@ -51,11 +51,11 @@ let s:hack_errorformat =
   \  '%EFile "%f"\, line %l\, characters %c-%.%#,%Z%m,'
   \ .'Error: %m,'
 
-function! s:JobStdoutHandler(job_id, data)
+function! s:JobStdoutHandler(job_id, data, event)
   let s:stdout = s:stdout + a:data
 endfunction
 
-function! s:JobExitHandler(job_id)
+function! s:JobExitHandler(job_id, data, event)
   let hh_result = join(s:stdout, "\n")
   call <SID>HackPopulateQuickfix(hh_result)
 endfunction
