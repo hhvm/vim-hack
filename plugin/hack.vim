@@ -137,7 +137,7 @@ function! hack#search(full_lookup, name)
     endif
     " Use current word.
     if name == ''
-      let name = expand('<cword>')
+      let name = substitute(expand('<cword>'), '[^A-Za-z0-9_$].*$', '', '')
     endif
   end
   call <SID>HackClientCall(['--search', name])
