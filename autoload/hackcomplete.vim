@@ -41,7 +41,7 @@ function! hackcomplete#Complete(findstart, base)
 
   " Insert the base and magic token into the current line.
   let curline = lines[lnum - 1]
-  let lines[lnum - 1] = curline[:cnum - 1] . a:base . s:autotok . curline[cnum :]
+  let lines[lnum - 1] = curline[:cnum - 2] . a:base . s:autotok . curline[cnum - 1 :]
 
   " Pass the buffer to hh_client.
   let buffer = join(lines, "\n")
