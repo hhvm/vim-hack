@@ -102,10 +102,15 @@ function! <SID>HackPopulateQuickfix(hh_result)
     cgetexpr a:hh_result
   endif
 
+  let l:winnr = winnr()
   if g:hack#autoclose
     botright cwindow
   else
     botright copen
+  endif
+
+  if (s:nvim && l:winnr != winnr())
+    exe l:winnr . "wincmd w"
   endif
 
   let &errorformat = old_fmt
