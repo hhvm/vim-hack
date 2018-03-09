@@ -17,6 +17,10 @@ if exists("g:loaded_hack")
 endif
 let g:loaded_hack = 1
 
+if !exists('g:hack#edit_mode')
+  let g:hack#edit_mode = 'edit'
+endif
+
 if !exists('g:hack#hh_client')
   let g:hack#hh_client = 'hh_client'
 endif
@@ -181,7 +185,7 @@ function! hack#goto_def()
 
   let pos = output.definition_pos
   if !empty(pos.filename)
-    execute 'edit '.(pos.filename)
+    execute g:hack#edit_mode . ' ' . (pos.filename)
   endif
   call cursor(pos.line, pos.char_start)
 endfunction
