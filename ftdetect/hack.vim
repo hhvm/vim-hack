@@ -13,10 +13,10 @@
 
 au BufRead,BufNewFile *.hhi
   \ setl filetype=hack |
-  \ runtime! syntax/php.vim
+  \ setl syntax=php
 
 au BufRead,BufNewFile *.hh,*.php
   \ if getline(1) =~ '^<?hh' |
   \   setl filetype=hack |
-  \   runtime! syntax/php.vim |
+  \   setl syntax=php |
   \ endif
