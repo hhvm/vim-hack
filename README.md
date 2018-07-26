@@ -1,3 +1,21 @@
+About `vim-hack`
+================
+
+`vim-hack` provides file type detection and syntax highlighting for Hack files.
+
+For advanced features, we recommend using this plugin in combination with a
+Language Server Protocol plugin for Vim, such as
+[LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim),
+configured to run `hh_client lsp` - for example:
+
+```
+let g:LanguageClient_serverCommands = {
+  \ 'hack': [ 'hh_client', 'lsp' ],
+  \ }
+```
+
+LanguageClient-neovim supports both vim and nevim.
+
 Installation
 ============
 
@@ -13,3 +31,12 @@ that ships with Vim 7.4, or a compatible file.
 For more information on the Hack language, visit http://hacklang.org.
 
 [pathogen]: https://github.com/tpope/vim-pathogen
+
+Alternatively, if you are using `vim-plug`:
+
+    Plug 'hhvm/vim-hack'
+
+License
+=======
+
+vim-hack is BSD licensed, as found in the LICENSE file. We also provide an additional patent grant.

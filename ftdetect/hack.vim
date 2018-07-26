@@ -11,9 +11,12 @@
 " grant of patent rights can be found in the PATENTS file in the same
 " directory.
 
-au BufRead,BufNewFile *.hhi setl filetype=php
+au BufRead,BufNewFile *.hhi
+  \ setl filetype=hack |
+  \ runtime! syntax/php.vim
 
-au BufRead,BufNewFile *.hh
+au BufRead,BufNewFile *.hh,*.php
   \ if getline(1) =~ '^<?hh' |
-  \   setl filetype=php |
+  \   setl filetype=hack |
+  \   runtime! syntax/php.vim |
   \ endif
