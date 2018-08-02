@@ -20,3 +20,10 @@ au BufRead,BufNewFile *.hh,*.php
   \   setl filetype=hack |
   \   setl syntax=php |
   \ endif
+
+" Try to match both `/usr/bin/hhvm`, and `/usr/bin/env hhvm`.
+au BufRead,BufNewFile *
+  \ if getline(1) =~ '[ /]hhvm$' && getline(2) =~ '^<?hh' |
+  \   setl filetype=hack |
+  \   setl syntax=php |
+  \ endif
