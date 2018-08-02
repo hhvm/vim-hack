@@ -99,8 +99,7 @@ This binds `K` to 'show type in the gutter', and both `gd` and meta-click ('comm
 License
 =======
 
-vim-hack is BSD licensed, as found in the LICENSE file. We also provide an
-additional patent grant.
+HHAST is MIT-licensed, as found in the LICENSE file.
 
 [ALE]: https://github.com/w0rp/ale
 [HHAST]: https://github.com/hhvm/hhast
