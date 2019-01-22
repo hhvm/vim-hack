@@ -9,6 +9,7 @@
 " This source code is licensed under the MIT license found in the
 " LICENSE file in the toplevel directory of this source tree.
 
+source $VIMRUNTIME/syntax/php.vim
 
 " We clear templatizable PHP keywords because keyword always takes precedence
 " over match and region.
