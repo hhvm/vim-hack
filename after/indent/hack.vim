@@ -19,7 +19,7 @@ setlocal indentexpr=GetHackIndent()
 function! GetHackIndent()
   let php_indent = GetPhpIndent()
 
-  if getline(v:lnum-1) =~? '<<.*>>$'
+  if getline(v:lnum-1) =~? '^\s*<<.*>>$'
     return php_indent - shiftwidth()
   end
 
