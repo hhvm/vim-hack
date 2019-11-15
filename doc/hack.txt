@@ -20,11 +20,6 @@
 Hack is a request-oriented programming language for HHVM; See
 https://hacklang.org for further information about Hack.
 
-
-It enables programmers to explicitly annotate their PHP code with static types
-and introduces other powerful language constructs such as collections and async
-functions.  See http://hacklang.org/ for further information about Hack.
-
 This vim plugin provides syntax highlighting and file-type detection - this
 plugin no-longer offers IDE-like features such as quickfix and omnicompletion.
 These features are available from Language Server Protocol plugins; `ale` is
