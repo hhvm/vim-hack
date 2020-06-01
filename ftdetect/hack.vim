@@ -9,7 +9,7 @@
 " This source code is licensed under the MIT license found in the
 " LICENSE file in the top level directory of this source tree.
 "
-au BufRead,BufNewFile *.hack
+au BufRead,BufNewFile *.hack,*.hackpartial
   \ setl filetype=hack |
   \ setl syntax=hack
 
