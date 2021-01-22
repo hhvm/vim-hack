@@ -33,6 +33,9 @@ syn keyword phpType bool[ean] int[eger] real double float string object null con
 syn keyword phpType void mixed tuple num stringish this resource contained
 syn match phpType +^array$+ contained
 
+" Backticks are not legal string delimiters in Hack.
+syn clear phpBacktick
+
 " Hack type declarations.
 syn keyword hackTypeDecl type newtype shape contained
 
