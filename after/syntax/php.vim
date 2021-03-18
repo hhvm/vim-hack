@@ -68,4 +68,3 @@ syn region phpRegion matchgroup=Delimiter keepend
   \ start=+<?hh\( // partial\| // strict\| // decl\|\)+
   \ end=+?>+
   \ contains=@phpClTop
-
