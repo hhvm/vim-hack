@@ -36,6 +36,15 @@ syn match phpType +^array$+ contained
 " Backticks are not legal string delimiters in Hack.
 syn clear phpBacktick
 
+" `#` is no longer used for Hack comments.
+syn clear phpComment
+if exists("php_parent_error_open")
+  syn region phpComment start="/\*" end="\*/" contained contains=phpTodo,@Spell
+else
+  syn region phpComment start="/\*" end="\*/" contained contains=phpTodo,@Spell extend
+endif
+syn match phpComment "//.\{-}\(?>\|$\)\@=" contained extend contains=phpTodo,@Spell
+
 " Hack type declarations.
 syn keyword hackTypeDecl type newtype shape contained
 
