@@ -38,7 +38,11 @@ syn clear phpBacktick
 
 " `#` is no longer used for Hack comments.
 syn clear phpComment
-syn region phpComment start="/\*" end="\*/" contained extend contains=phpTodo,@Spell
+if exists("php_parent_error_open")
+  syn region phpComment start="/\*" end="\*/" contained contains=phpTodo,@Spell
+else
+  syn region phpComment start="/\*" end="\*/" contained contains=phpTodo,@Spell extend
+endif
 syn match phpComment "//.\{-}\(?>\|$\)\@=" contained extend contains=phpTodo,@Spell
 
 " Hack type declarations.
